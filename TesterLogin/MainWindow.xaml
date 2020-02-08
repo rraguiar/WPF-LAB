@@ -1,0 +1,46 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TesterLogin"
+        xmlns:LoginUserControl="clr-namespace:LoginUserControl;assembly=LoginUserControl"
+        x:Class="TesterLogin.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="450"
+        Width="581.019">
+    <Grid>
+        <LoginUserControl:LoginUserControl x:Name="loginUserControl"
+                                           HorizontalAlignment="Left"
+                                           Height="192"
+                                           Margin="10,10,0,0"
+                                           VerticalAlignment="Top"
+                                           Width="494" />
+        <TextBox x:Name="txtBoxUsernameOutput"
+                 Text="{Binding ElementName=loginUserControl,Path=UserPassword}"
+                 HorizontalAlignment="Left"
+                 Height="30"
+                 Margin="73,326,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="431"
+                 IsEnabled="False" />
+        <TextBox x:Name="txtBoxPasswordOutput"
+                 Text="{Binding ElementName=loginUserControl,Path=UserName}"
+                 HorizontalAlignment="Left"
+                 Height="30"
+                 Margin="73,264,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="431"
+                 IsEnabled="False" />
+        <Label Content="User test:"
+               HorizontalAlignment="Left"
+               Margin="73,238,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Password test:"
+               HorizontalAlignment="Left"
+               Margin="73,300,0,0"
+               VerticalAlignment="Top" />
+    </Grid>
+</Window>

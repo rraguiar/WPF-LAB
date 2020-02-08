@@ -1,0 +1,253 @@
+﻿<Window x:Class="_301041266_aguiar__Lab02.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_301041266_aguiar__Lab02"
+        mc:Ignorable="d"
+        Title="Restaurant Bill Calculator"
+        Height="623.75"
+        Width="800"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="DGHeaderStyle"
+               TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle"
+                    Value="{DynamicResource DGCHeaderStyle}" />
+        </Style>
+        <Style x:Key="DGCHeaderStyle"
+               TargetType="DataGridColumnHeader">
+            <Setter Property="Height"
+                    Value="40" />
+            <Setter Property="FontSize"
+                    Value="16" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
+        <CollectionViewSource x:Key="appetizerViewSource"
+                              d:DesignSource="{d:DesignInstance {x:Type local:Appetizer}, CreateList=True}" />
+        <CollectionViewSource x:Key="beverageViewSource"
+                              d:DesignSource="{d:DesignInstance {x:Type local:Beverage}, CreateList=True}" />
+        <CollectionViewSource x:Key="dessertViewSource"
+                              d:DesignSource="{d:DesignInstance {x:Type local:Dessert}, CreateList=True}" />
+        <CollectionViewSource x:Key="mainCourseViewSource"
+                              d:DesignSource="{d:DesignInstance {x:Type local:MainCourse}, CreateList=True}" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Content="Beverage"
+               HorizontalAlignment="Left"
+               Margin="10,42,0,0"
+               VerticalAlignment="Top"
+               FontSize="16" />
+        <ComboBox x:Name="cBoxBeverage"
+                  HorizontalAlignment="Left"
+                  Margin="93,46,0,0"
+                  VerticalAlignment="Top"
+                  Width="170"
+                  DropDownClosed="cBoxBeverage_DropDownClosed"
+                  DropDownOpened="cBoxBeverage_DropDownOpened"
+                  FontSize="13">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding BeverageItem}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Content="Appetizer"
+               HorizontalAlignment="Left"
+               Margin="10,108,0,0"
+               VerticalAlignment="Top"
+               FontSize="16" />
+        <ComboBox x:Name="cBoxAppetizer"
+                  HorizontalAlignment="Left"
+                  Margin="93,114,0,0"
+                  VerticalAlignment="Top"
+                  Width="170"
+                  DropDownClosed="cBoxAppetizer_DropDownClosed"
+                  DropDownOpened="cBoxAppetizer_DropDownOpened"
+                  FontSize="13">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding AppetizerItem}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Content="Main Course"
+               HorizontalAlignment="Left"
+               Margin="276,42,0,0"
+               VerticalAlignment="Top"
+               FontSize="16" />
+        <ComboBox x:Name="cBoxMainCourse"
+                  HorizontalAlignment="Left"
+                  Margin="380,46,0,0"
+                  VerticalAlignment="Top"
+                  Width="170"
+                  DropDownClosed="cBoxMainCourse_DropDownClosed"
+                  DropDownOpened="cBoxMainCourse_DropDownOpened"
+                  FontSize="13">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding MainCourseItem}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Content="Dessert"
+               HorizontalAlignment="Left"
+               Margin="312,108,0,0"
+               VerticalAlignment="Top"
+               FontSize="16" />
+        <ComboBox x:Name="cBoxDessert"
+                  HorizontalAlignment="Left"
+                  Margin="380,114,0,0"
+                  VerticalAlignment="Top"
+                  Width="170"
+                  DropDownClosed="cBoxDessert_DropDownClosed"
+                  DropDownOpened="cBoxDessert_DropDownOpened"
+                  FontSize="13">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DessertItem}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <DataGrid x:Name="dGridCheck"
+                  HorizontalAlignment="Left"
+                  Height="348"
+                  CanUserSortColumns="False"
+                  CanUserResizeColumns="False"
+                  Margin="24,186,0,0"
+                  VerticalAlignment="Top"
+                  Width="516"
+                  AlternatingRowBackground="LightGray"
+                  FontSize="14"
+                  Style="{DynamicResource DGHeaderStyle}"
+                  CanUserReorderColumns="False"
+                  ColumnWidth="*"
+                  CanUserResizeRows="False"
+                  SelectionChanged="dGridCheck_SelectionChanged"
+                  AutoGeneratingColumn="ConvertPriceToCurrency">
+            
+
+        </DataGrid>
+        <StatusBar x:Name="indentityStatusBar"
+                   HorizontalAlignment="Left"
+                   Height="35"
+                   Margin="0,554,-0.667,0"
+                   VerticalAlignment="Top"
+                   Width="794">
+
+            <StatusBarItem x:Name="studentId"
+                           Content="301041266 - Rafael Aguiar"
+                           Height="35"
+                           VerticalAlignment="Center"
+                           Width="744"
+                           HorizontalAlignment="Center" />
+            <Hyperlink NavigateUri="https://www.centennialcollege.ca/"
+                       RequestNavigate="Hyperlink_RequestNavigate"
+                       TextDecorations="none">
+                <Image Height="33"
+                       Width="33"
+                       Source="CentennialLogo.png"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            </Hyperlink>
+        </StatusBar>
+        <Image HorizontalAlignment="Center"
+               Margin="565,38,15,0"
+               VerticalAlignment="Top"
+               Source="TheLocal.png"
+               RenderTransformOrigin="-0.235,0.571" />
+        <Button x:Name="btnRemoveItem"
+                Content="Remove Ordered Item"
+                HorizontalAlignment="Left"
+                Margin="598,186,0,0"
+                VerticalAlignment="Top"
+                Width="154"
+                Height="35"
+                FontSize="14"
+                FontWeight="Bold"
+                Click="btnRemoveItem_Click" />
+        <Button x:Name="btnClearAll"
+                Content="Clear All"
+                HorizontalAlignment="Left"
+                Margin="598,243,0,0"
+                VerticalAlignment="Top"
+                Width="154"
+                Height="35"
+                FontSize="14"
+                FontWeight="Bold"
+                Click="btnClearAll_Click" />
+        <Label Content="Sub Total"
+               HorizontalAlignment="Left"
+               Margin="559,303,0,0"
+               VerticalAlignment="Top"
+               FontSize="18" />
+        <Label Content="Tax"
+               HorizontalAlignment="Left"
+               Margin="559,367,0,0"
+               VerticalAlignment="Top"
+               FontSize="18" />
+        <Label Content="Total"
+               HorizontalAlignment="Left"
+               Margin="559,436,0,0"
+               VerticalAlignment="Top"
+               FontSize="18" />
+        <TextBox x:Name="txtBoxTotal"
+                 HorizontalAlignment="Left"
+                 Height="40"
+                 Margin="657,436,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="111"
+                 FontSize="18"
+                 IsEnabled="False"
+                 IsReadOnly="True"
+                 Focusable="False"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 FontWeight="Bold" />
+        <TextBox x:Name="txtBoxTax"
+                 HorizontalAlignment="Left"
+                 Height="40"
+                 Margin="657,367,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="111"
+                 FontSize="18"
+                 IsEnabled="False"
+                 IsReadOnly="True"
+                 Focusable="False"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 FontWeight="Bold" />
+        <TextBox x:Name="txtBoxSubTotal"
+                 HorizontalAlignment="Left"
+                 Height="40"
+                 Margin="657,303,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="111"
+                 FontSize="18"
+                 IsEnabled="False"
+                 IsReadOnly="True"
+                 Focusable="False"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 FontWeight="Bold" />
+        <Button x:Name="btnPrintInvoice"
+                Content="Print Invoice"
+                HorizontalAlignment="Left"
+                Margin="598,499,0,0"
+                VerticalAlignment="Top"
+                Width="154"
+                Height="35"
+                FontSize="14"
+                FontWeight="Bold"
+                Click="btnPrintInvoice_Click" />
+    </Grid>
+</Window>
